@@ -12,7 +12,7 @@ import argparse
 
 import config as cfg
 from utils.text_process import load_test_dict, text_process
-
+from seqgan_instructor import SeqGANInstructor
 
 def program_config(parser):
     # Program
@@ -99,38 +99,20 @@ if __name__ == '__main__':
     parser = program_config(parser)
     opt = parser.parse_args()
 
+    print(opt)
+
     if opt.if_real_data:
         opt.max_seq_len, opt.vocab_size = text_process('dataset/' + opt.dataset + '.txt')
         cfg.extend_vocab_size = len(load_test_dict(opt.dataset)[0])  # init classifier vocab_size
     cfg.init_param(opt)
+    # from cfg to opt.
     opt.save_root = cfg.save_root
     opt.train_data = cfg.train_data
     opt.test_data = cfg.test_data
 
-    # ===Dict===
-    if cfg.if_real_data:
-        from instructor.real_data.seqgan_instructor import SeqGANInstructor
-        from instructor.real_data.leakgan_instructor import LeakGANInstructor
-        from instructor.real_data.maligan_instructor import MaliGANInstructor
-        from instructor.real_data.jsdgan_instructor import JSDGANInstructor
-        from instructor.real_data.relgan_instructor import RelGANInstructor
-        from instructor.real_data.sentigan_instructor import SentiGANInstructor
-
-    else:
-        from instructor.oracle_data.seqgan_instructor import SeqGANInstructor
-        from instructor.oracle_data.leakgan_instructor import LeakGANInstructor
-        from instructor.oracle_data.maligan_instructor import MaliGANInstructor
-        from instructor.oracle_data.jsdgan_instructor import JSDGANInstructor
-        from instructor.oracle_data.relgan_instructor import RelGANInstructor
-        from instructor.oracle_data.sentigan_instructor import SentiGANInstructor
-
+    # set up instructor.
     instruction_dict = {
-        'seqgan': SeqGANInstructor,
-        'leakgan': LeakGANInstructor,
-        'maligan': MaliGANInstructor,
-        'jsdgan': JSDGANInstructor,
-        'relgan': RelGANInstructor,
-        'sentigan': SentiGANInstructor,
+        'seqgan': SeqGANInstructor
     }
 
     inst = instruction_dict[cfg.run_model](opt)

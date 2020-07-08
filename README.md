@@ -105,7 +105,7 @@ python3 run_seqgan.py 0 0
 
 - run file: [run_seqgan.py](run/run_seqgan.py)
 
-- Instructors: [oracle_data](instructor/oracle_data/seqgan_instructor.py), [real_data](instructor/real_data/seqgan_instructor.py)
+- Instructors: [oracle_data](seqgan_instructor.py), [real_data](instructor/real_data/seqgan_instructor.py)
 
 - Models: [generator](models/SeqGAN_G.py), [discriminator](models/SeqGAN_D.py)
 

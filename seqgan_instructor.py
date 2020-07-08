@@ -33,18 +33,24 @@ class SeqGANInstructor(BasicInstructor):
         self.gen_adv_opt = optim.Adam(self.gen.parameters(), lr=cfg.gen_lr)
         self.dis_opt = optim.Adam(self.dis.parameters(), lr=cfg.dis_lr)
 
+    """
+    My code　start from here.
+    """
     def _run(self):
         # ===PRE-TRAINING===
         # TRAIN GENERATOR
-        if not cfg.gen_pretrain:
+
+        if cfg.gen_pretrain:
             self.log.info('Starting Generator MLE Training...')
             self.pretrain_generator(cfg.MLE_train_epoch)
             if cfg.if_save and not cfg.if_test:
                 torch.save(self.gen.state_dict(), cfg.pretrained_gen_path)
                 print('Save pre-trained generator: {}'.format(cfg.pretrained_gen_path))
 
+
+
         # ===TRAIN DISCRIMINATOR====
-        if not cfg.dis_pretrain:
+        if cfg.dis_pretrain:
             self.log.info('Starting Discriminator Training...')
             self.train_discriminator(cfg.d_step, cfg.d_epoch)
             if cfg.if_save and not cfg.if_test:

@@ -18,8 +18,8 @@ CUDA = True
 if_save = True
 data_shuffle = False  # False
 oracle_pretrain = True  # True
-gen_pretrain = False
-dis_pretrain = False
+gen_pretrain = True
+dis_pretrain = True
 clas_pretrain = False
 
 run_model = 'seqgan'  # seqgan, leakgan, maligan, jsdgan, relgan, sentigan
